@@ -18,6 +18,7 @@
   \setsansfont{TeX Gyre Heros}
 \fi
 \usepackage{tikz}
+\usepackage{multimedia} % video en el PDF (se reproduce en Adobe Acrobat Reader)
 \usetikzlibrary{positioning,shapes,arrows.meta,calc,shadows}
 
 % ---------- Paleta Día de Muertos ----------
@@ -266,6 +267,22 @@
       \includegraphics[width=#1,height=#2,keepaspectratio]{\imgpath}};
   \end{tikzpicture}}
 
+% ---------- Demo en video dentro de un iPhone ----------
+% Archivos en imagenes/: marco_iphone.png, demo.png (portada) y demo.mp4 (video)
+\newlength{\demoW}\newlength{\demoH}
+\newcommand{\pantallademo}{%
+  \img{demo}{\includegraphics[width=\demoW,height=\demoH]{\imgpath}}{%
+    \begin{tikzpicture}\fill[papel] (0,0) rectangle (\demoW,\demoH);\end{tikzpicture}}}
+\newcommand{\iphonevideo}[1]{% alto total del teléfono
+  \setlength{\demoH}{#1}\setlength{\demoW}{0.46285\demoH}\setlength{\demoH}{0.96110\demoH}%
+  \begin{tikzpicture}
+    \node[inner sep=0] at (0,0) {%
+      \IfFileExists{imagenes/demo.mp4}{\movie[width=\demoW,height=\demoH,poster,showcontrols]{\pantallademo}{imagenes/demo.mp4}}{%
+      \IfFileExists{imagenes/demo.mov}{\movie[width=\demoW,height=\demoH,poster,showcontrols]{\pantallademo}{imagenes/demo.mov}}{%
+      \pantallademo}}};
+    \node[inner sep=0] at (0,0) {\includegraphics[height=#1]{imagenes/marco_iphone.png}};
+  \end{tikzpicture}}
+
 \begin{document}
 
 {\setbeamercolor{background canvas}{bg=noche}
@@ -441,33 +458,19 @@
 
 
 
-% ---------- Pantallas ----------
+% ---------- Demo en video ----------
 \begin{frame}[plain]
   \papelpicado
-  \vspace{0.55cm}
-  \begin{center}{\fontsize{20}{26}\selectfont\bfseries\color{noche} Conócelos.}\end{center}
-  \vspace{0.15cm}
-  \centering
-  \begin{tikzpicture}[scale=0.74,transform shape]
-    \begin{scope}[shift={(0,0)}]\pPerfil\end{scope}
-    \begin{scope}[shift={(4.5,0)}]\pRecuerdos\end{scope}
-    \begin{scope}[shift={(9.0,0)}]\pArbol\end{scope}
-  \end{tikzpicture}\\[2pt]
-  {\small\color{gris}\makebox[3.2cm]{Su historia}\hspace{0.1cm}\makebox[3.2cm]{Su voz}\hspace{0.1cm}\makebox[3.2cm]{Su familia}}
-\end{frame}
-
-\begin{frame}[plain]
-  \papelpicado
-  \vspace{0.55cm}
-  \begin{center}{\fontsize{20}{26}\selectfont\bfseries\color{noche} Recuérdalos.}\end{center}
-  \vspace{0.15cm}
-  \centering
-  \begin{tikzpicture}[scale=0.74,transform shape]
-    \begin{scope}[shift={(0,0)}]\pInicio\end{scope}
-    \begin{scope}[shift={(4.5,0)}]\pOfrenda\end{scope}
-    \begin{scope}[shift={(9.0,0)}]\pQR\end{scope}
-  \end{tikzpicture}\\[2pt]
-  {\small\color{gris}\makebox[3.2cm]{Cada día}\hspace{0.1cm}\makebox[3.2cm]{Su ofrenda}\hspace{0.1cm}\makebox[3.2cm]{Su foto en QR}}
+  \begin{columns}[c]
+    \column{0.5\textwidth}
+      {\color{rosa}\small\bfseries DEMO}\\[6pt]
+      {\fontsize{24}{30}\selectfont\bfseries\color{noche} Así se vive\\ Ofrenda Viva.}\\[0.5cm]
+      {\large\color{tinta!85} Conoce a José, escucha a la abuela Carmen y descubre el significado de cada elemento de la ofrenda.}
+    \column{0.42\textwidth}
+      \centering
+      \vspace{0.6cm}
+      \iphonevideo{6.1cm}
+  \end{columns}
 \end{frame}
 
 % ---------- Síntesis ----------
@@ -498,12 +501,25 @@
   \begin{center}
     \begin{minipage}{0.85\textwidth}\centering
       {\color{white}\large Nuestros abuelos guardan historias que ningún libro tiene.\\[3pt]
-      Cada año que pasa sin preguntarles, es una historia menos.}\\[0.5cm]
-      {\color{vela}\large Este Día de Muertos, siéntate con ellos frente a la ofrenda y pregunta:
-      \textbf{“¿Quién era?”}}\\[0.8cm]
-      {\color{cempa}\fontsize{24}{30}\selectfont\bfseries Porque nadie muere del todo\\ mientras alguien lo recuerde.}\\[0.8cm]
-      {\color{white}\Large\bfseries Gracias}\\[3pt]
+      Cada año que pasa sin preguntarles, es una historia menos.}\\[1.0cm]
+      {\color{cempa}\fontsize{24}{30}\selectfont\bfseries Porque nadie muere del todo\\ mientras alguien lo recuerde.}
     \end{minipage}
+  \end{center}
+  \vfill
+\end{frame}}
+
+% ---------- Gracias ----------
+{\setbeamercolor{background canvas}{bg=noche}
+\begin{frame}[plain]
+  \papelpicado
+  \vfill
+  \begin{center}
+    {\color{white}\fontsize{44}{48}\selectfont\bfseries Gracias}\\[0.4cm]
+    {\color{cempa}\Large Ofrenda Viva}\\[1.0cm]
+    {\color{white!85}\large Aldo Axel Estrada Zacarías}\\[4pt]
+    {\color{white!85}\large Evelin Jiménez Olivo}\\[4pt]
+    {\color{white!85}\large Oscar Cabrera Rojas}\\[0.8cm]
+    {\color{white!50}\small iOS Development Lab}
   \end{center}
   \vfill
 \end{frame}}
